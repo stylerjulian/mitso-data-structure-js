@@ -1,6 +1,6 @@
 import { NotImplementedError } from '../extensions/index.js';
 
-// import { ListNode } from '../extensions/list-node.js';
+import { ListNode } from '../extensions/list-node.js';
 
 /**
  * Implement the Queue with a given interface via linked list (use ListNode extension above).
@@ -14,20 +14,43 @@ import { NotImplementedError } from '../extensions/index.js';
  * queue.getUnderlyingList() // returns { value: 3, next: null }
  */
 export default class Queue {
-
-  getUnderlyingList() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  constructor() {
+    this.front = null;
+    this.rear = null;
   }
 
-  enqueue(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  getUnderlyingList() {
+    return this.front;
+  }
+
+  enqueue(value) {
+    const newNode = new ListNode(value);
+    
+    if (this.rear === null) {
+      // Queue is empty, both front and rear point to new node
+      this.front = newNode;
+      this.rear = newNode;
+    } else {
+      // Add the new node at the end and update rear
+      this.rear.next = newNode;
+      this.rear = newNode;
+    }
   }
 
   dequeue() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (this.front === null) {
+      return null; // or throw an error, depending on requirements
+    }
+    
+    // Remove front node and return its value
+    const dequeuedValue = this.front.value;
+    this.front = this.front.next;
+    
+    // If front becomes null, then rear should also become null
+    if (this.front === null) {
+      this.rear = null;
+    }
+    
+    return dequeuedValue;
   }
-
 }
